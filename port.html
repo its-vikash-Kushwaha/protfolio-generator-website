@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Portfolio, Web Developer, Personal Portfolio" />
+    <meta name="description" content="Personal Portfolio Website" />
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
+    <link id='favicon' rel="shortcut icon" href="./assets/images/favicon.png" type="image/x-png">
+    <title>Portfolio</title>
+</head>
+<body oncontextmenu="return false">
+
+<!-- Navbar -->
+<header>
+    <a href="#about" class="logo"><span class="name-display"></span></a>
+    <div id="menu" class="fas fa-bars"></div>
+    <nav class="navbar">
+        <ul>
+            <li><a class="active" href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Hero Section -->
+<section class="home" id="home">
+    <div id="particles-js"></div>
+    <div class="content">
+        <h2>Hi There,<br/> I'm <span class="name-display"></span></h2>
+        <p>This is my Portfolio Website</p>
+        <a href="#about" class="btn"><span>About Me</span> <i class="fas fa-arrow-circle-down"></i></a>
+    </div>
+    <div class="image">
+        <img draggable="false" class="tilt" id="profile-photo" alt="Profile Photo">
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about" id="about">
+    <h2 class="heading"><i class="fas fa-user-alt"></i> About <span>Me</span></h2>
+    <div class="row">
+        <div class="image">
+            <img draggable="false" class="tilt" src="./assets/images/imgg.avif" alt="Profile Photo">
+        </div>
+        <div class="content">
+            <h3>I'm <span class="name-display"></span></h3>
+            <p><span class="about-display"></span></p>
+            <div class="box-container">
+                <div class="box">
+                    <p>Email: <span class="email-display"></span></p>
+                    <p>Mobile: <span class="mobile-display"></span></p>
+                    <p>Linkedin: <span class="linkedin-display"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Education Section -->
+<section class="education" id="education">
+  <div class="education-container">
+      <!-- Dynamic content will be inserted here -->
+  </div>
+</section>
+
+<!-- Skills Section -->
+<section class="skills" id="skills">
+  <div class="skills-container">
+      <!-- Dynamic content will be inserted here -->
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="footer" id="contact">
+    <div class="box-container">
+        <div class="box">
+            <h3><span class="name-display"></span>'s Portfolio</h3>
+            <p>Thank you for visiting my personal portfolio website.</p>
+        </div>
+        <div class="box">
+            <h3>Quick Links</h3>
+            <a href="#home"><i class="fas fa-chevron-circle-right"></i> Home</a>
+            <a href="#about"><i class="fas fa-chevron-circle-right"></i> About</a>
+            <a href="#education"><i class="fas fa-chevron-circle-right"></i> Education</a>
+            <a href="#skills"><i class="fas fa-chevron-circle-right"></i> Skills</a>
+        </div>
+        <div class="box">
+            <h3>Contact Info</h3>
+            <p><i class="fas fa-phone"></i> <span class="mobile-display"></span></p>
+            <p><i class="fas fa-envelope"></i> <span class="email-display"></span></p>
+        </div>
+    </div>
+    <h1 class="credit">Designed by <a href="#">The Geek Squad</a></h1>
+</section>
+
+<!-- Scroll to Top -->
+<a href="#home" class="fas fa-angle-up" id="scroll-top"></a>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="./assets/js/script.js"></script>
+<script>
+  const portfolioData = JSON.parse(localStorage.getItem("portfolioData"));
+
+if (portfolioData) {
+    // Populate name
+    document.querySelectorAll(".name-display").forEach(element => {
+        element.textContent = portfolioData.name;
+    });
+
+    // Populate about section
+    document.querySelectorAll(".about-display").forEach(element => {
+        element.textContent = portfolioData.about;
+    });
+
+    // Set profile photo
+    const profilePhoto = document.getElementById("profile-photo");
+    profilePhoto.src = portfolioData.photo;
+    profilePhoto.alt = `${portfolioData.name}'s Photo`;
+
+   // Populate education section
+const educationContainer = document.querySelector(".education-container");
+if (portfolioData.education) {
+  console.log("Education data exists:", portfolioData.education);
+  
+  // Clear previous content
+  educationContainer.innerHTML = ""; 
+  
+  // Create and add the heading
+  const heading = document.createElement("h2");
+  heading.classList.add("heading");
+  heading.innerHTML = '<i class="fas fa-graduation-cap"></i> My <span>Education</span>';
+  educationContainer.appendChild(heading); // Append heading to the education container
+
+  // Iterate over education data and create elements
+  portfolioData.education.forEach((edu, index) => {
+    console.log("Adding education item:", edu);
+    const divContainer = document.createElement("div"); // Create a container div
+    divContainer.classList.add("container", index % 2 === 0 ? "right" : "left"); // Alternate classes for styling
+
+    const divContent = document.createElement("div"); // Create a content div
+    divContent.classList.add("content");
+
+    const divTag = document.createElement("div"); // Create a tag div
+    divTag.classList.add("tag");
+    const h2 = document.createElement("h2"); // Create an h2 element
+    h2.textContent = edu; // Set the text content to the education item
+
+    divTag.appendChild(h2); // Append h2 to the tag div
+    divContent.appendChild(divTag); // Append tag div to content div
+    divContainer.appendChild(divContent); // Append content div to container div
+    educationContainer.appendChild(divContainer); // Append container div to the education section
+  });
+} else {
+  console.log("No education data found.");
+}
+  // Populate skills section
+const skillsContainer = document.querySelector(".skills");
+if (portfolioData.skills) {
+  console.log("Skills data exists:", portfolioData.skills);
+  
+  // Clear previous content
+  skillsContainer.innerHTML = ""; 
+  
+  // Create and add the heading
+  const heading = document.createElement("h2");
+  heading.classList.add("heading");
+  heading.innerHTML = '<i class="fas fa-briefcase"></i> Skills and Abilities';
+  skillsContainer.appendChild(heading); // Append heading to the skills container
+
+  // Iterate over skills data and create elements
+  portfolioData.skills.forEach((skill, index) => {
+    console.log("Adding skill:", skill);
+    const divContainer = document.createElement("div"); // Create a container div
+    divContainer.classList.add("container", index % 2 === 0 ? "right" : "left"); // Alternate classes for styling
+
+    const divContent = document.createElement("div"); // Create a content div
+    divContent.classList.add("content");
+
+    const divTag = document.createElement("div"); // Create a tag div
+    divTag.classList.add("tag");
+    const h2 = document.createElement("h2"); // Create an h2 element
+    h2.textContent = skill; // Set the text content to the skill
+
+    divTag.appendChild(h2); // Append h2 to the tag div
+    divContent.appendChild(divTag); // Append tag div to content div
+    divContainer.appendChild(divContent); // Append content div to container div
+    skillsContainer.appendChild(divContainer); // Append container div to the skills section
+  });
+} else {
+  console.log("No skills data found.");
+}
+// Populate email and mobile
+document.querySelectorAll(".email-display").forEach(element => {
+        element.textContent = portfolioData.email;
+    });
+
+    document.querySelectorAll(".mobile-display").forEach(element => {
+        element.textContent = portfolioData.mobile;
+    });
+
+    // Populate contact information
+    document.querySelectorAll(".linkedin-display").forEach(link => {
+        link.textContent = portfolioData.linkedin;
+    });
+} else {
+    alert("No portfolio data found. Please fill out the form first!");
+}
+</script>
+
+</body>
+</html>
